@@ -54,7 +54,7 @@ pipeline {
             steps {
                 sh '''
                   npm install netlify-cli
-                  alias netlify = node_modules/.bin/netlify 
+                  alias netlify='node_modules/.bin/netlify' 
                   netlify --version
                   netlify status
                   netlify deploy --dir=build --prod           
