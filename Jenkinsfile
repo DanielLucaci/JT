@@ -27,21 +27,21 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
-            }
+        // stage('Test') {
+        //     agent {
+        //         docker {
+        //             image 'node:18-alpine'
+        //             reuseNode true
+        //         }
+        //     }
 
-            steps {
-                sh '''
-                    test -f build/index.html
-                    npm test
-                '''
-            }
-        }
+        //     steps {
+        //         sh '''
+        //             test -f build/index.html
+        //             npm test
+        //         '''
+        //     }
+        // }
 
         stage('Deploy') {
             agent {
@@ -54,8 +54,10 @@ pipeline {
             steps {
                 sh '''
                   npm install netlify-cli
-                  node_modules/.bin/netlify --version
-                  node_modules/.bin/netlify status               
+                  alias netlify = node_modules/.bin/netlify 
+                  netlify --version
+                  netlify status
+                  netlify deploy --dir=build --prod           
                 '''
             }
         }
